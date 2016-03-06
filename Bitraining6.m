@@ -8,8 +8,8 @@ beta = 0.8^2;  %attenuation loss from non-direct antennas
 n0 = 10^(-2);    %noise variance
 P = 1; %power constraint
 
-iternums = 1:5; % number of iterations
-N_Realizations = 10;
+iternums = 1:2; % number of iterations
+N_Realizations = 1;
 
 C1 = zeros(N_Realizations, length(iternums));
 C2 = zeros(N_Realizations, length(iternums));
@@ -69,8 +69,8 @@ for Realization = 1 : N_Realizations
             
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
-            [v11a, v12a, v13a, v21a, v22a, v23a, v31a, v32a, v33a] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
-            [v11b, v12b, v13b, v21b, v22b, v23b, v31b, v32b, v33b] = MSE_b(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, g1, g2, g3, n0);
+            %[v11a, v12a, v13a, v21a, v22a, v23a, v31a, v32a, v33a] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
+            %[v11b, v12b, v13b, v21b, v22b, v23b, v31b, v32b, v33b] = MSE_b(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, g1, g2, g3, n0);
             %[v11, v12, v13]
             %[v21, v22, v23]
             %[v31, v32, v33]
@@ -79,7 +79,7 @@ for Realization = 1 : N_Realizations
             
             
             %%%Verification
-            
+            %{
             k = [g1'*H11 g1'*H12 g1'*H13 g2'*H21 g2'*H22 g2'*H23 g3'*H31 g3'*H32 g3'*H33];
             A = [H11'*g1*g1'*H11 H11'*g1*g1'*H12 H11'*g1*g1'*H13;H12'*g1*g1'*H11 H12'*g1*g1'*H12 H12'*g1*g1'*H13;H13'*g1*g1'*H11 H13'*g1*g1'*H12 H13'*g1*g1'*H13];
             B = [H21'*g2*g2'*H21 H21'*g2*g2'*H22 H21'*g2*g2'*H23;H22'*g2*g2'*H21 H22'*g2*g2'*H22 H22'*g2*g2'*H23;H23'*g2*g2'*H21 H23'*g2*g2'*H22 H23'*g2*g2'*H23];
@@ -94,6 +94,7 @@ for Realization = 1 : N_Realizations
             +norm([g1;g2;g3])^2*n0
             %maximize kv
             %minimize v'ABCv
+            %}
             
             
             %%Forward Training: LS Algorithm
@@ -134,7 +135,7 @@ end
 
 p1=plot(iternums, mean(C1)+mean(C2)+mean(C3),'o');
 
-axis([1 numiters 0 20])
+axis([1 numiters 0 30])
 
 xlabel('Number of iterations')
 ylabel('C(bits/channel)')

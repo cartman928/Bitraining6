@@ -9,17 +9,20 @@ C = [H31'*g3*g3'*H31 H31'*g3*g3'*H32 H31'*g3*g3'*H33;H32'*g3*g3'*H31 H32'*g3*g3'
 
 %Dual Problem
 %{
-for o = -10^(4):10^4
-lambda1 = o*10^(-3);
-lambda2 = 2;
-lambda3 = 2;
+for o = -10^(5):10^5
+lambda1 = o*10^(-5);
+lambda2 = 1;
+lambda3 = 1;
 Lam = diag([lambda1 lambda1 lambda2 lambda2 lambda3 lambda3]);
 
-g(o+10^(4)+1) = 3 - k*inv([A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam])*k'-P*(lambda1+lambda2+lambda3)+n0*(g1'*g1+g2'*g2+g3'*g3);
+g(o+10^5+1) = 3 - k*inv([A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam])*k'-P*(lambda1+lambda2+lambda3)+n0*(g1'*g1+g2'*g2+g3'*g3);
 end
-o = 1+0.5*10^4:(3/2)*10^4+1;
+o = 1:2*10^5+1;
 plot(o,g(o))
-axis([1 2*10^4+1 -10^1 10^1])
+axis([1 2*10^5+1 -2.5 0])
+[M,I] = max(real(g(10^5+1-200:10^5+1+200)))
+
+real(g(10^5+1-200:10^5+1+200));
 %}
 
 
@@ -33,17 +36,27 @@ E(10);
 
 %Search for Optimal Point
 %stepsize = 1/real(E(18));
-stepsize = 10^(-4);
+stepsize = 10^(-5);
 %{
-lambda1 = real(-E(10)/2);
-lambda2 = real(-E(10)/2);
-lambda3 = real(-E(10)/2);
+lambda1 = real(E(10)/2);
+lambda2 = real(E(10)/2);
+lambda3 = real(E(10)/2);
 %}
-lambda1 = 1;
-lambda2 = 1;
-lambda3 = 1;
 
-for n = 1:2*10^(5)
+
+
+lambda1 = 0.05;
+lambda2 = -0.5;
+lambda3 = 5;
+
+%{
+lambda1 = 0;
+lambda2 = 0;
+lambda3 = 0;
+%}
+
+
+for n = 1:10^(6)
 %{
 lambda = real(lambda + stepsize*(-P+norm(k)^2*trace(inv(A+B+C+lambda*eye(6))*inv(A+B+C+lambda*eye(6)))))
 real(-P+norm(k)^2*trace(inv(A+B+C+lambda*eye(6))*inv(A+B+C+lambda*eye(6))))
@@ -61,9 +74,13 @@ lambda2 = real(lambda2 + stepsize*gradient2);
 gradient3 = -P+gradient(5,5)+gradient(6,6)+gradient(11,11)+gradient(12,12)+gradient(17,17)+gradient(18,18);
 lambda3 = real(lambda3 + stepsize*gradient3);
 
-GG=norm(gradient1)+norm(gradient2)+norm(gradient3)
 
-if((norm(gradient1)+norm(gradient2)+norm(gradient3))< 10^(-6)  )
+
+
+a = real(3 - k*inv([A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam])*k'-P*(lambda1+lambda2+lambda3)+n0*(g1'*g1+g2'*g2+g3'*g3));
+[a norm([gradient1 gradient2 gradient3]) lambda1 lambda2 lambda3]
+
+if(norm([gradient1 gradient2 gradient3])< 10^(-4)  )
             disp('converges!');
             break;%break the for loop if it's true the condition
 end
@@ -72,13 +89,13 @@ end
 
 
 end
-GG=norm(gradient1)+norm(gradient2)+norm(gradient3)
+
 %{
-lambda1 = 10^(-8);
-lambda2 = 10^(-8);
-lambda3 = 10^(-8);
+lambda1 = n0;
+lambda2 = n0;
+lambda3 = n0;
 %}
-Lam = diag([lambda1 lambda1 lambda2 lambda2 lambda3 lambda3]);
+Lam = diag([lambda1 lambda1 lambda2 lambda2 lambda3 lambda3])
 
 V=(k*[inv([A+B+C+Lam]) 0*eye(6) 0*eye(6);0*eye(6)   inv([A+B+C+Lam])   0*eye(6);0*eye(6) 0*eye(6) inv([A+B+C+Lam])])';
 
