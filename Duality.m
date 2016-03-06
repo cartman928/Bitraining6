@@ -11,15 +11,15 @@ C = [H31'*g3*g3'*H31 H31'*g3*g3'*H32 H31'*g3*g3'*H33;H32'*g3*g3'*H31 H32'*g3*g3'
 %{
 for o = -10^(5):10^5
 lambda1 = o*10^(-5);
-lambda2 = 1;
-lambda3 = 1;
+lambda2 = 5;
+lambda3 = 5;
 Lam = diag([lambda1 lambda1 lambda2 lambda2 lambda3 lambda3]);
 
 g(o+10^5+1) = 3 - k*inv([A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam])*k'-P*(lambda1+lambda2+lambda3)+n0*(g1'*g1+g2'*g2+g3'*g3);
 end
 o = 1:2*10^5+1;
 plot(o,g(o))
-axis([1 2*10^5+1 -2.5 0])
+%axis([1 2*10^5+1 -5 5])
 [M,I] = max(real(g(10^5+1-200:10^5+1+200)))
 
 real(g(10^5+1-200:10^5+1+200));
@@ -36,7 +36,7 @@ E(10);
 
 %Search for Optimal Point
 %stepsize = 1/real(E(18));
-stepsize = 10^(-5);
+stepsize = 10^(-4);
 %{
 lambda1 = real(E(10)/2);
 lambda2 = real(E(10)/2);
@@ -45,8 +45,8 @@ lambda3 = real(E(10)/2);
 
 
 
-lambda1 = 0.05;
-lambda2 = -0.5;
+lambda1 = 5;
+lambda2 = 5;
 lambda3 = 5;
 
 %{
@@ -56,7 +56,7 @@ lambda3 = 0;
 %}
 
 
-for n = 1:10^(6)
+for n = 1:10^(5)
 %{
 lambda = real(lambda + stepsize*(-P+norm(k)^2*trace(inv(A+B+C+lambda*eye(6))*inv(A+B+C+lambda*eye(6)))))
 real(-P+norm(k)^2*trace(inv(A+B+C+lambda*eye(6))*inv(A+B+C+lambda*eye(6))))
