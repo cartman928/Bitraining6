@@ -1,4 +1,4 @@
-%% Duality Method
+ %% Duality Method
 %% Initialize Parameters
 clc
 clear
@@ -85,11 +85,11 @@ for Realization = 1 : N_Realizations
             B = [H21'*g2*g2'*H21 H21'*g2*g2'*H22 H21'*g2*g2'*H23;H22'*g2*g2'*H21 H22'*g2*g2'*H22 H22'*g2*g2'*H23;H23'*g2*g2'*H21 H23'*g2*g2'*H22 H23'*g2*g2'*H23];
             C = [H31'*g3*g3'*H31 H31'*g3*g3'*H32 H31'*g3*g3'*H33;H32'*g3*g3'*H31 H32'*g3*g3'*H32 H32'*g3*g3'*H33;H33'*g3*g3'*H31 H33'*g3*g3'*H32 H33'*g3*g3'*H33];
             
-            va = [v11a;v12a;v13a;v21a;v22a;v23a;v31a;v32a;v33a];
+            va = [v11a;v21a;v31a;v12a;v22a;v32a;v13a;v23a;v33a];
             La = 3-k*va-(k*va)'+va'*[A+B+C 0*eye(6) 0*eye(6);0*eye(6) A+B+C 0*eye(6);0*eye(6) 0*eye(6) A+B+C]*va...
             +norm([g1;g2;g3])^2*n0
         
-            vb = [v11b;v12b;v13b;v21b;v22b;v23b;v31b;v32b;v33b];
+            vb = [v11b;v21b;v31b;v12b;v22b;v32b;v13b;v23b;v33b];
             Lb = 3-k*vb-(k*vb)'+vb'*[A+B+C 0*eye(6) 0*eye(6);0*eye(6) A+B+C 0*eye(6);0*eye(6) 0*eye(6) A+B+C]*vb...
             +norm([g1;g2;g3])^2*n0
             %maximize kv
