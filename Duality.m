@@ -33,12 +33,17 @@ E(10);
 
 %Search for Optimal Point
 %stepsize = 1/real(E(18));
-stepsize = 10^(-3);
+stepsize = 10^(-4);
+%{
 lambda1 = real(-E(10)/2);
 lambda2 = real(-E(10)/2);
 lambda3 = real(-E(10)/2);
+%}
+lambda1 = 1;
+lambda2 = 1;
+lambda3 = 1;
 
-for n = 1:1*10^(5)
+for n = 1:2*10^(5)
 %{
 lambda = real(lambda + stepsize*(-P+norm(k)^2*trace(inv(A+B+C+lambda*eye(6))*inv(A+B+C+lambda*eye(6)))))
 real(-P+norm(k)^2*trace(inv(A+B+C+lambda*eye(6))*inv(A+B+C+lambda*eye(6))))
@@ -81,13 +86,13 @@ v11 = V(1:2);
 v21 = V(3:4);
 v31 = V(5:6);
 
-v12 = V(1:2);
-v22 = V(3:4);
-v32 = V(5:6);
+v12 = V(7:8);
+v22 = V(9:10);
+v32 = V(11:12);
 
-v13 = V(1:2);
-v23 = V(3:4);
-v33 = V(5:6);
+v13 = V(13:14);
+v23 = V(15:16);
+v33 = V(17:18);
 
 (norm(v11)^2+norm(v12)^2+norm(v13)^2)
 
