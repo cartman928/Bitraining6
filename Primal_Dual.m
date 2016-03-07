@@ -3,8 +3,8 @@ function [v11, v12, v13, v21, v22, v23, v31, v32, v33] = Primal_Dual(H11, H12, H
 
 %Constants
 lambda = [0;0;0];
+v = zeros(18,1);
 Lam = diag([lambda(1) lambda(1) lambda(2) lambda(2) lambda(3) lambda(3)]);
-v = [v11;v21;v31;v12;v22;v32;v13;v23;v33]; 
 k = [g1'*H11 g1'*H12 g1'*H13 g2'*H21 g2'*H22 g2'*H23 g3'*H31 g3'*H32 g3'*H33];
 A = [H11'*g1*g1'*H11 H11'*g1*g1'*H12 H11'*g1*g1'*H13;H12'*g1*g1'*H11 H12'*g1*g1'*H12 H12'*g1*g1'*H13;H13'*g1*g1'*H11 H13'*g1*g1'*H12 H13'*g1*g1'*H13];
 B = [H21'*g2*g2'*H21 H21'*g2*g2'*H22 H21'*g2*g2'*H23;H22'*g2*g2'*H21 H22'*g2*g2'*H22 H22'*g2*g2'*H23;H23'*g2*g2'*H21 H23'*g2*g2'*H22 H23'*g2*g2'*H23];
@@ -12,17 +12,33 @@ C = [H31'*g3*g3'*H31 H31'*g3*g3'*H32 H31'*g3*g3'*H33;H32'*g3*g3'*H31 H32'*g3*g3'
 ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam];
 
 %Priaml Problem
-L = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3));
-L_g = -2*k+2*v'*ABCLam;
+%L = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3));
+%L_g = -2*k+2*v'*ABCLam;
 
 %Dual Problem
-D_g = [norm([v11;v12;v13])^2;norm([v21;v22;v23])^2;norm([v31;v32;v33])^2];
+%D_g = [norm([v11;v12;v13])^2;norm([v21;v22;v23])^2;norm([v31;v32;v33])^2];
 
+%Verification
+%{
+for o = -10^(5):10^5
+v = [10^(-5)*o;zeros(17,1)];
+L(o+10^5+1) = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3));
+end
+o = 1:2*10^5+1;
+plot(o,L(o))
+%axis([1 2*10^5+1 -5 5])
+%}
+
+v = zeros(18,1);
 stepsize = 10^(-5);
 %Primal Upadate
-for n = 1:10^5
-L_g = -2*k+2*v'*ABCLam
-v = v - stepsize*L_g;
+
+for n = 1:10^8
+L_g = -2*k+2*v'*ABCLam;
+%norm([L_g(1:2) L_g(3:4) L_g(5:6) L_g(7:8) L_g(9:10) L_g(11:12) L_g(13:14) L_g(15:16) L_g(17:18)])
+[v(1) norm(L_g(1))]
+%v = v - stepsize*transpose(L_g);
+v = v - stepsize*[(L_g(1))';zeros(17,1)];
 end
 %Dual Update
 for n = 1:10^5
