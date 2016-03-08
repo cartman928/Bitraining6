@@ -12,21 +12,22 @@ C = [H31'*g3*g3'*H31 H31'*g3*g3'*H32 H31'*g3*g3'*H33;H32'*g3*g3'*H31 H32'*g3*g3'
 ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam];
 
 %P/D Update
-stepsize = 10^(-4);
-for n = 1:10
+stepsize = 10^(-5);
+for n = 1:2
             %Primal Upadate
             for n = 1:10^5
             L_g = -2*k+2*v'*ABCLam;   
-            v = v - stepsize*L_g;           
+            v = v - stepsize*L_g';           
             end
             Lp = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3))
             %Dual Update
             D_g = [norm([v(1:2);v(7:8);v(13:14)])^2-P;norm([v(3:4);v(9:10);v(15:16)])^2-P;norm([v(5:6);v(11:12);v(17:18)])^2-P];
             lambda = lambda + stepsize*D_g;
-            Ld = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3))
             
             Lam = diag([lambda(1) lambda(1) lambda(2) lambda(2) lambda(3) lambda(3)]);
             ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam];
+            Ld = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3))           
+            
             
             %Lambda > 0
             %{
@@ -39,9 +40,19 @@ for n = 1:10
             if(lambda(3) < 10^(-6))
                 lambda(3) = 0;
             end
-            lambda
+            %}
+             %Lambda < 0
+            if(lambda(1) > 10^(-6))
+                lambda(1) = 0;
+            end
+            if(lambda(2) > 10^(-6))
+                lambda(2) = 0;
+            end
+            if(lambda(3) > 10^(-6))
+                lambda(3) = 0;
             end
             %}
+            lambda
 end
 
 V=(k*[inv([A+B+C+Lam]) 0*eye(6) 0*eye(6);0*eye(6)   inv([A+B+C+Lam])   0*eye(6);0*eye(6) 0*eye(6) inv([A+B+C+Lam])])';
