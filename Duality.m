@@ -45,15 +45,10 @@ lambda3 = real(E(10)/2);
 
 
 
-lambda1 = 5;
-lambda2 = 5;
-lambda3 = 5;
+lambda1 = 0.1;
+lambda2 = 0.1;
+lambda3 = 0.1;
 
-%{
-lambda1 = 0;
-lambda2 = 0;
-lambda3 = 0;
-%}
 
 
 for n = 1:10^(5)
@@ -65,7 +60,9 @@ Lam = diag([lambda1 lambda1 lambda2 lambda2 lambda3 lambda3]);
 gradient = [inv([A+B+C+Lam]) 0*eye(6) 0*eye(6);0*eye(6)   inv([A+B+C+Lam])   0*eye(6);0*eye(6) 0*eye(6) inv([A+B+C+Lam])]...
              *k'*k...
              *[inv([A+B+C+Lam]) 0*eye(6) 0*eye(6);0*eye(6)   inv([A+B+C+Lam])   0*eye(6);0*eye(6) 0*eye(6) inv([A+B+C+Lam])];
+%{
 gradient1 = -P+gradient(1,1)+gradient(2,2)+gradient(7,7)+gradient(8,8)+gradient(13,13)+gradient(14,14);
+
 lambda1 = real(lambda1 + stepsize*gradient1);
 
 gradient2 = -P+gradient(3,3)+gradient(4,4)+gradient(9,9)+gradient(10,10)+gradient(15,15)+gradient(16,16);
@@ -73,7 +70,16 @@ lambda2 = real(lambda2 + stepsize*gradient2);
 
 gradient3 = -P+gradient(5,5)+gradient(6,6)+gradient(11,11)+gradient(12,12)+gradient(17,17)+gradient(18,18);
 lambda3 = real(lambda3 + stepsize*gradient3);
+%}
+gradient1 = -P+gradient(1,1)+gradient(2,2)+gradient(7,7)+gradient(8,8)+gradient(13,13)+gradient(14,14);
 
+lambda1 = real(lambda1 + stepsize*gradient1');
+
+gradient2 = -P+gradient(3,3)+gradient(4,4)+gradient(9,9)+gradient(10,10)+gradient(15,15)+gradient(16,16);
+lambda2 = real(lambda2 + stepsize*gradient2');
+
+gradient3 = -P+gradient(5,5)+gradient(6,6)+gradient(11,11)+gradient(12,12)+gradient(17,17)+gradient(18,18);
+lambda3 = real(lambda3 + stepsize*gradient3');
 
 
 
@@ -123,24 +129,7 @@ L = 3-k*v-(k*v)'+v'*[A+B+C+lambda1*eye(6) 0*eye(6) 0*eye(6);0*eye(6) A+B+C+lambd
     -P*(lambda1+lambda2+lambda3)+norm([g1;g2;g3])^2*n0;
 
 
-a=1;
-%Normalize
-%{
-M1 = sqrt(norm(v11)^2+norm(v12)^2+norm(v13)^2);
-v11 = v11/M1;
-v12 = v12/M1;
-v13 = v13/M1;
 
-M2 = sqrt(norm(v21)^2+norm(v22)^2+norm(v23)^2);
-v21 = v21/M2;
-v22 = v22/M2;
-v23 = v23/M2;
-
-M3 = sqrt(norm(v31)^2+norm(v32)^2+norm(v33)^2);
-v31 = v31/M3;
-v32 = v32/M3;
-v33 = v33/M3;
-%}
 end
 
     
