@@ -8,10 +8,11 @@ stepsize = 10^(-3);
             L_g = 2*x+lambda;
             x = x - stepsize*L_g;
             end
-            L_p = x^2+lambda*(x+P)
+            L_p = x^2+lambda*(x+P);
             %Dual Update
             D_g = x+P;
             lambda = lambda + stepsize*D_g;
-            L_d = x^2+lambda*(x+P)
+            L_d = x^2+lambda*(x+P);
+            [L_p L_d x]
 end
 %plot(lambda)
