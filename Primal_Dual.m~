@@ -2,7 +2,7 @@ function [v11, v12, v13, v21, v22, v23, v31, v32, v33] = Primal_Dual(H11, H12, H
 %Duality
 
 %Constants
-lambda = [1;1;1];%Staring Point
+lambda = [-1;-1;-1];%Staring Point
 v = zeros(18,1);%Staring Point
 Lam = diag([lambda(1) lambda(1) lambda(2) lambda(2) lambda(3) lambda(3)]);
 k = [g1'*H11 g1'*H12 g1'*H13 g2'*H21 g2'*H22 g2'*H23 g3'*H31 g3'*H32 g3'*H33];
@@ -14,20 +14,18 @@ ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*ey
 %P/D Update
 stepsize = 10^(-4);
 for n = 1:10^(3)
-            stepsize = 10^(-3);
             %Primal Upadate
             for n = 1:10^5
             L_g = -2*k+2*v'*ABCLam;
-            norm(L_g);
+            norm(L_g)
             v = v - stepsize*L_g';
-                if(norm(L_g)< 10^(-6))
+                if(norm([gradient1 gradient2 gradient3])< 10^(-4)  )
                 disp('converges!');
                 break;%break the for loop if it's true the condition
                 end
             end
             Lp = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3))
             %Dual Update
-            stepsize = 10^(-2);
             D_g = [norm([v(1:2);v(7:8);v(13:14)])^2-P;norm([v(3:4);v(9:10);v(15:16)])^2-P;norm([v(5:6);v(11:12);v(17:18)])^2-P];
             lambda = lambda + stepsize*D_g;
             
@@ -37,7 +35,7 @@ for n = 1:10^(3)
             
             
             %Lambda > 0
-            
+            %{
             if(lambda(1) < 10^(-6))
                 lambda(1) = 0;
             end
@@ -47,9 +45,8 @@ for n = 1:10^(3)
             if(lambda(3) < 10^(-6))
                 lambda(3) = 0;
             end
-            
+            %}
              %Lambda < 0
-             %{
             if(lambda(1) > -10^(-6))
                 lambda(1) = 0;
             end
@@ -60,7 +57,6 @@ for n = 1:10^(3)
                 lambda(3) = 0;
             end
             %}
-             
             lambda
 end
 
