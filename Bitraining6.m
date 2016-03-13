@@ -77,8 +77,7 @@ for Realization = 1 : N_Realizations
             %Power = [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
             %[v11, v12, v13, v21, v22, v23, v31, v32, v33] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
             [v11, v12, v13, v21, v22, v23, v31, v32, v33] = Primal_Dual(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
-            [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
-            [norm(v11)^2+norm(v21)^2+norm(v31)^2 norm(v12)^2+norm(v22)^2+norm(v32)^2 norm(v13)^2+norm(v23)^2+norm(v33)^2]
+            [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2];
             
             
             %%%Verification
@@ -101,7 +100,7 @@ for Realization = 1 : N_Realizations
             
             
             %%Forward Training: LS Algorithm
-            %[g1, g2, g3] = MSE_f(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
+            [g1, g2, g3] = MSE_f(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
             %[g1, g12, g13, g21, g2, g23, g31, g32, g3] = Duality(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, v11, v22, v33, P, n0);
            
             %norm(g1)^2
