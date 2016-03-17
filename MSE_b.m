@@ -30,6 +30,10 @@ v31 = R3\P31;
 v32 = R3\P32;
 v33 = R3\P33;
 
+
+
+
+
 %Normalize
 
 M1 = sqrt(norm(v11)^2+norm(v12)^2+norm(v13)^2);
@@ -46,6 +50,7 @@ M3 = sqrt(norm(v31)^2+norm(v32)^2+norm(v33)^2);
 v31 = v31/M3;
 v32 = v32/M3;
 v33 = v33/M3;
+
 end
 
     

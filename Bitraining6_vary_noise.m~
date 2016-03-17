@@ -8,15 +8,11 @@ beta = 0.8^2;  %attenuation loss from non-direct antennas
 n0 = 10^(-3);    %noise variance
 P = 1; %power constraint
 
-iternums = 1:50; % number of iterations
-N_Realizations = 100;
+N_Realizations = 2;
 
-C1 = zeros(N_Realizations, length(iternums));
-C2 = zeros(N_Realizations, length(iternums));
-C3 = zeros(N_Realizations, length(iternums));
-MSE = zeros(N_Realizations, length(iternums));
-MSEb = zeros(N_Realizations, length(iternums));
-MSEc = zeros(N_Realizations, length(iternums));
+C1 = zeros(N_Realizations, 11);
+C2 = zeros(N_Realizations, 11);
+C3 = zeros(N_Realizations, 11);
 
 %% Start Loop
 for Realization = 1 : N_Realizations
@@ -81,9 +77,11 @@ for Realization = 1 : N_Realizations
     v32 = zeros(2, 1); 
     v33 = zeros(2, 1); 
     %}
-    
-    for numiters = 1:length(iternums)
-
+    for kkk = 1:11
+        kkk
+        n0 = 10^(-3)+10^(-3)*10*(kkk-1);
+    for iterrrr = 1:20
+        
         %% bi-directional training
             
             %%Backward Training: sudo-LS Algorithm
@@ -156,27 +154,9 @@ for Realization = 1 : N_Realizations
             MSEb(Realization, numiters)=MSE_Cal(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11b, v12b, v13b,v21b,v22b,v23b,v31b,v32b,v33b,g1b, g2b, g3b, P, n0);
             MSEc(Realization, numiters)=MSE_Cal(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11c, v12c, v13c,v21c,v22c,v23c,v31c,v32c,v33c,g1c, g2c, g3c, P, n0);
             %}
-            SINR1 = norm(g1'*(H11*v11+H12*v21+H13*v31))^2/((norm(g1'*(H11*v12+H12*v22+H13*v32)))^2+(norm(g1'*(H11*v13+H12*v23+H13*v33)))^2+n0*g1'*g1);
-            SINR2 = norm(g2'*(H21*v12+H22*v22+H23*v32))^2/((norm(g2'*(H21*v11+H22*v21+H23*v31)))^2+(norm(g2'*(H21*v13+H22*v23+H23*v33)))^2+n0*g2'*g2);
-            SINR3 = norm(g3'*(H31*v13+H32*v23+H33*v33))^2/((norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+(norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+n0*g3'*g3);
-            C1(Realization, numiters) = abs(log2(1+SINR1));
-            C2(Realization, numiters) = abs(log2(1+SINR2));
-            C3(Realization, numiters) = abs(log2(1+SINR3));
             
+   
             
-            SINR1b = norm(g1b'*(H11*v11b+H12*v21b+H13*v31b))^2/((norm(g1b'*(H11*v12b+H12*v22b+H13*v32b)))^2+(norm(g1b'*(H11*v13b+H12*v23b+H13*v33b)))^2+n0*g1b'*g1b);
-            SINR2b = norm(g2b'*(H21*v12b+H22*v22b+H23*v32b))^2/((norm(g2b'*(H21*v11b+H22*v21b+H23*v31b)))^2+(norm(g2b'*(H21*v13b+H22*v23b+H23*v33b)))^2+n0*g2b'*g2b);
-            SINR3b = norm(g3b'*(H31*v13b+H32*v23b+H33*v33b))^2/((norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+(norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+n0*g3b'*g3b);
-            C1b(Realization, numiters) = abs(log2(1+SINR1b));
-            C2b(Realization, numiters) = abs(log2(1+SINR2b));
-            C3b(Realization, numiters) = abs(log2(1+SINR3b));
-            
-            SINR1c = norm(g1c'*(H11*v11c+H12*v21c+H13*v31c))^2/((norm(g1c'*(H11*v12c+H12*v22c+H13*v32c)))^2+(norm(g1c'*(H11*v13c+H12*v23c+H13*v33c)))^2+n0*g1c'*g1c);
-            SINR2c = norm(g2c'*(H21*v12c+H22*v22c+H23*v32c))^2/((norm(g2c'*(H21*v11c+H22*v21c+H23*v31c)))^2+(norm(g2c'*(H21*v13c+H22*v23c+H23*v33c)))^2+n0*g2c'*g2c);
-            SINR3c = norm(g3c'*(H31*v13c+H32*v23c+H33*v33c))^2/((norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+(norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+n0*g3c'*g3c);
-            C1c(Realization, numiters) = abs(log2(1+SINR1c));
-            C2c(Realization, numiters) = abs(log2(1+SINR2c));
-            C3c(Realization, numiters) = abs(log2(1+SINR3c));
             
             %{
             SINR1 = norm(g1'*(H11*v11+H12*v21+H13*v31))^2/((norm(g1'*(H11*v12+H12*v22+H13*v32)))^2+(norm(g1'*(H11*v13+H12*v23+H13*v33)))^2);
@@ -232,7 +212,31 @@ for Realization = 1 : N_Realizations
             g3c = g3c/norm(g3c);
             %end
             
-            end           
+    end   
+            
+            SINR1 = norm(g1'*(H11*v11+H12*v21+H13*v31))^2/((norm(g1'*(H11*v12+H12*v22+H13*v32)))^2+(norm(g1'*(H11*v13+H12*v23+H13*v33)))^2+n0*g1'*g1);
+            SINR2 = norm(g2'*(H21*v12+H22*v22+H23*v32))^2/((norm(g2'*(H21*v11+H22*v21+H23*v31)))^2+(norm(g2'*(H21*v13+H22*v23+H23*v33)))^2+n0*g2'*g2);
+            SINR3 = norm(g3'*(H31*v13+H32*v23+H33*v33))^2/((norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+(norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+n0*g3'*g3);
+            C1(Realization,kkk ) = abs(log2(1+SINR1));
+            C2(Realization,kkk ) = abs(log2(1+SINR2));
+            C3(Realization,kkk) = abs(log2(1+SINR3));
+            
+            
+            SINR1b = norm(g1b'*(H11*v11b+H12*v21b+H13*v31b))^2/((norm(g1b'*(H11*v12b+H12*v22b+H13*v32b)))^2+(norm(g1b'*(H11*v13b+H12*v23b+H13*v33b)))^2+n0*g1b'*g1b);
+            SINR2b = norm(g2b'*(H21*v12b+H22*v22b+H23*v32b))^2/((norm(g2b'*(H21*v11b+H22*v21b+H23*v31b)))^2+(norm(g2b'*(H21*v13b+H22*v23b+H23*v33b)))^2+n0*g2b'*g2b);
+            SINR3b = norm(g3b'*(H31*v13b+H32*v23b+H33*v33b))^2/((norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+(norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+n0*g3b'*g3b);
+            C1b(Realization,kkk) = abs(log2(1+SINR1b));
+            C2b(Realization,kkk) = abs(log2(1+SINR2b));
+            C3b(Realization,kkk) = abs(log2(1+SINR3b));
+            
+            SINR1c = norm(g1c'*(H11*v11c+H12*v21c+H13*v31c))^2/((norm(g1c'*(H11*v12c+H12*v22c+H13*v32c)))^2+(norm(g1c'*(H11*v13c+H12*v23c+H13*v33c)))^2+n0*g1c'*g1c);
+            SINR2c = norm(g2c'*(H21*v12c+H22*v22c+H23*v32c))^2/((norm(g2c'*(H21*v11c+H22*v21c+H23*v31c)))^2+(norm(g2c'*(H21*v13c+H22*v23c+H23*v33c)))^2+n0*g2c'*g2c);
+            SINR3c = norm(g3c'*(H31*v13c+H32*v23c+H33*v33c))^2/((norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+(norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+n0*g3c'*g3c);
+            C1c(Realization, kkk) = abs(log2(1+SINR1c));
+            C2c(Realization, kkk) = abs(log2(1+SINR2c));
+            C3c(Realization, kkk) = abs(log2(1+SINR3c));
+            
+    end
     
 end
 
@@ -240,18 +244,18 @@ end
 
 
 %% Plot C(bits/channel)
-figure
+
+x=linspace(10^(-3),10^(-1)+10^(-3),11);
+p1=semilogx(x, mean(C1)+mean(C2)+mean(C3),'o');
 hold on
+p2=semilogx(x, mean(C1b)+mean(C2b)+mean(C3b),'*');
+p3=semilogx(1:11, mean(C1c)+mean(C2c)+mean(C3c),'s');
 
-p1=plot(iternums, mean(C1)+mean(C2)+mean(C3),'o');
-p2=plot(iternums, mean(C1b)+mean(C2b)+mean(C3b),'*');
-p3=plot(iternums, mean(C1c)+mean(C2c)+mean(C3c),'s');
+axis([1 10 0 40])
 
-axis([1 numiters 0 40])
-
-xlabel('Number of iterations')
+xlabel('Noise(log)')
 ylabel('C(bits/channel)')
-title('Capacity vs. Iterations: 3 users;P=1;n0=10^{-3};100 realizations')
+title('Capacity vs. Noise: 3 users;P=1;Iterations:20;100 realizations')
 legend([p1,p2,p3],'Cooperative Transmitters(Duality Method)','Cooperative Transmitters(R^{-1}p)','Simple Transmitters')
 
 %{

@@ -2,7 +2,7 @@ P=1;
 lambda = -5;
 x = -3;
 for n = 1:10^5
-stepsize = 10^(-3);
+stepsize = 10^(-1);
             %Primal Upadate
             L_g = 2*x+lambda;
             x = x - stepsize*L_g;

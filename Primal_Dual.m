@@ -10,39 +10,41 @@ A = [(H11')*g1*(g1')*H11 (H11')*g1*(g1')*H12 (H11')*g1*(g1')*H13;(H12')*g1*(g1')
 B = [(H21')*g2*(g2')*H21 (H21')*g2*(g2')*H22 (H21')*g2*(g2')*H23;(H22')*g2*(g2')*H21 (H22')*g2*(g2')*H22 (H22')*g2*(g2')*H23;(H23')*g2*(g2')*H21 (H23')*g2*(g2')*H22 (H23')*g2*(g2')*H23];
 C = [(H31')*g3*(g3')*H31 (H31')*g3*(g3')*H32 (H31')*g3*(g3')*H33;(H32')*g3*(g3')*H31 (H32')*g3*(g3')*H32 (H32')*g3*(g3')*H33;(H33')*g3*(g3')*H31 (H33')*g3*(g3')*H32 (H33')*g3*(g3')*H33];
 ABC =  [A+B+C 0*eye(6) 0*eye(6);0*eye(6) A+B+C 0*eye(6);0*eye(6) 0*eye(6) A+B+C];
-%ABC =  [A+B+C 0*eye(6) 0*eye(6);0*eye(6) A+B+C 0*eye(6);0*eye(6) 0*eye(6) A+B+C]+10^(1)*eye(18);
+%ABC =  [A+B+C 0*eye(6) 0*eye(6);0*eye(6) A+B+C 0*eye(6);0*eye(6) 0*eye(6) A+B+C]+10^(-2)*eye(18);
 ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam];
-%ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam]+10^(1)*eye(18);
+%ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam]+10^(-2)*eye(18);
 L_g = zeros(1,18);
 %P/D Update
-for n = 1:0.5*10^(5)
-            stepsize = 10^(-4);
+for n = 1:10^(3)
+stepsize = 5*10^(-2);    
+            
             %Primal Upadate
             L_g = -2*k+2*(v')*ABCLam;
             v = v - stepsize*L_g';
             Lp = 3-k*v-(k*v)'+v'*ABC*v+n0*(g1'*g1+g2'*g2+g3'*g3);
+            
             %Dual Update
-            stepsize = 10^(-3);
+          
             D_g = [norm(v(1:2))^2+norm(v(7:8))^2+norm(v(13:14))^2-P;norm(v(3:4))^2+norm(v(9:10))^2+norm(v(15:16))^2-P;norm(v(5:6))^2+norm(v(11:12))^2+norm(v(17:18))^2-P];
             lambda = lambda + stepsize*D_g;
             
             Lam = diag([lambda(1) lambda(1) lambda(2) lambda(2) lambda(3) lambda(3)]);
             ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam];
-            %ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam]+10^(1)*eye(18);
+            %ABCLam =  [A+B+C+Lam 0*eye(6) 0*eye(6);0*eye(6) A+B+C+Lam 0*eye(6);0*eye(6) 0*eye(6) A+B+C+Lam]+10^(-2)*eye(18);
             Ld = 3-k*v-(k*v)'+v'*ABCLam*v+n0*(g1'*g1+g2'*g2+g3'*g3)-P*(lambda(1)+lambda(2)+lambda(3));
-            
-            [real(Lp) real(Ld) norm(v(1:2))^2+norm(v(7:8))^2+norm(v(13:14))^2 norm(v(3:4))^2+norm(v(9:10))^2+norm(v(15:16))^2 norm(v(5:6))^2+norm(v(11:12))^2+norm(v(17:18))^2]
+      
+            [real(Lp) real(Ld) norm(v(1:2))^2+norm(v(7:8))^2+norm(v(13:14))^2 norm(v(3:4))^2+norm(v(9:10))^2+norm(v(15:16))^2 norm(v(5:6))^2+norm(v(11:12))^2+norm(v(17:18))^2];
           
             
             %Lambda > 0
             
-            if(lambda(1) < 10^(-6))
+            if(lambda(1) < 10^(-8))
                 lambda(1) = 0;
             end
-            if(lambda(2) < 10^(-6))
+            if(lambda(2) < 10^(-8))
                 lambda(2) = 0;
             end
-            if(lambda(3) < 10^(-6))
+            if(lambda(3) < 10^(-8))
                 lambda(3) = 0;
             end
             %}

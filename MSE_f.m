@@ -28,10 +28,17 @@ g2 = g2h';
 g3 = g3h';
 
 %Normalize
-
+%{
+if norm(g1)^2 > 1
 g1 = g1/norm(g1);
+end
+if norm(g2)^2 > 1
 g2 = g2/norm(g2);
+end
+if norm(g3)^2 > 1
 g3 = g3/norm(g3);
+end
+%}
 end
 
     
