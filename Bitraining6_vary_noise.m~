@@ -11,14 +11,8 @@ P = 1; %power constraint
 N_Realizations = 10;
 
 C1 = zeros(N_Realizations, 101);
-C2 = zeros(N_Realizations, 101);
-C3 = zeros(N_Realizations, 101);
-C1b = zeros(N_Realizations, 101);
-C2b = zeros(N_Realizations, 101);
-C3b = zeros(N_Realizations, 101);
-C1c = zeros(N_Realizations, 101);
-C2c = zeros(N_Realizations, 101);
-C3c = zeros(N_Realizations, 101);
+C2 = zeros(N_Realizations, 1001);
+C3 = zeros(N_Realizations, 1001);
 
 %% Start Loop
 for Realization = 1 : N_Realizations
@@ -85,7 +79,7 @@ for Realization = 1 : N_Realizations
     %}
     for kkk = 1:101
         kkk
-        n0 = 10^(-3)+10^(-3)*10*(kkk-1);
+        n0 = 10^(-3)+10^(-3)*(kkk-1);
     for iterrrr = 1:20
         
         %% bi-directional training
@@ -251,7 +245,7 @@ end
 
 %% Plot C(bits/channel)
 
-x=linspace(10^(-3),1+10^(-3),101);
+x=linspace(10^(-3),1+10^(-3),1001);
 p1=semilogx(x, mean(C1)+mean(C2)+mean(C3),'o');
 hold on
 p2=semilogx(x, mean(C1b)+mean(C2b)+mean(C3b),'*');
