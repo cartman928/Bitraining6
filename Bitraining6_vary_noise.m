@@ -261,7 +261,7 @@ axis([10^(-3) 1 0 40])
 
 xlabel('Noise(log)')
 ylabel('C(bits/channel)')
-title('Capacity vs. Noise: 3 users;P=1;Iterations:20;100 realizations')
+title('Capacity vs. Noise: 3 users;P=1;Iterations:20;10 realizations')
 legend([p1,p2,p3],'Cooperative Transmitters(Duality Method)','Cooperative Transmitters(R^{-1}p)','Simple Transmitters')
 
 %{
