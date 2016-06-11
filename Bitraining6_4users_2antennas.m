@@ -14,8 +14,9 @@ N_Realizations = 2;
 C1 = zeros(N_Realizations, length(iternums));
 C2 = zeros(N_Realizations, length(iternums));
 C3 = zeros(N_Realizations, length(iternums));
-MSE = zeros(N_Realizations, length(iternums));
+C4 = zeros(N_Realizations, length(iternums));
 MSEb = zeros(N_Realizations, length(iternums));
+MSEc = zeros(N_Realizations, length(iternums));
 MSEc = zeros(N_Realizations, length(iternums));
 
 %% Start Loop
@@ -26,26 +27,40 @@ for Realization = 1 : N_Realizations
     H11 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
     H22 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
     H33 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
+    H44 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
     
     H12 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
-    H13 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
+    H13 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    H14 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
     H21 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
     H23 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
+    H24 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
     H31 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
     H32 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    H34 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    H41 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    H42 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    H43 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
     
     %Backward Channel
     
-    Z11 = H11';
-    Z22 = H22';
-    Z33 = H33';
+    Z11 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
+    Z22 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
+    Z33 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
+    Z44 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
     
-    Z12 = H21';
-    Z13 = H31';
-    Z21 = H12';
-    Z23 = H32';
-    Z31 = H13';
-    Z32 = H23';
+    Z12 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
+    Z13 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z14 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
+    Z21 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z23 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
+    Z24 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z31 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
+    Z32 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z34 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z41 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z42 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    Z43 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
   
     
     %% one iteration per block
