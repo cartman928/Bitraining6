@@ -9,7 +9,7 @@ n0 = 10^(-3);    %noise variance
 P = 1; %power constraint
 
 iternums = 1:10; % number of iterations
-N_Realizations = 10;
+N_Realizations = 2;
 
 C1 = zeros(N_Realizations, length(iternums));
 C2 = zeros(N_Realizations, length(iternums));
@@ -251,7 +251,7 @@ axis([1 numiters 0 40])
 
 xlabel('Number of iterations')
 ylabel('C(bits/channel)')
-title('Capacity vs. Iterations: 3 users;P=1;n0=10^{-3};100 realizations')
+title('Capacity vs. Iterations: 3 users;2 antennas;P=1;n0=10^{-3};100 realizations')
 legend([p1,p2,p3],'Cooperative Transmitters(Duality Method)','Cooperative Transmitters(R^{-1}p)','Simple Transmitters')
 
 %{

@@ -5,7 +5,7 @@ clear
 
 alpha = 0;    %coefficient for block fading model
 beta = 0.8^2;  %attenuation loss from non-direct antennas
-n0 = 10^(-3);    %noise variance
+n0 = 10^(-2);    %noise variance
 P = 1; %power constraint
 
 iternums = 1:10; % number of iterations
@@ -24,23 +24,23 @@ for Realization = 1 : N_Realizations
     Realization
         
     %% Random Channels
-    H11 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
-    H22 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
-    H33 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
-    H44 = (randn(2,2)+1i*randn(2,2))/sqrt(2);
+    H11 = (randn(4,4)+1i*randn(4,4))/sqrt(2);
+    H22 = (randn(4,4)+1i*randn(4,4))/sqrt(2);
+    H33 = (randn(4,4)+1i*randn(4,4))/sqrt(2);
+    H44 = (randn(4,4)+1i*randn(4,4))/sqrt(2);
     
-    H12 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
-    H13 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H14 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
-    H21 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H23 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
-    H24 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H31 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta); 
-    H32 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H34 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H41 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H42 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
-    H43 = (randn(2,2)+1i*randn(2,2))/sqrt(2/beta);
+    H12 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta); 
+    H13 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H14 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta); 
+    H21 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H23 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta); 
+    H24 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H31 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta); 
+    H32 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H34 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H41 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H42 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
+    H43 = (randn(4,4)+1i*randn(4,4))/sqrt(2/beta);
     
     %Backward Channel
     
@@ -64,28 +64,28 @@ for Realization = 1 : N_Realizations
   
     
     %% one iteration per block
-    g1 = rand(2, 1) + 1i*rand(2, 1); 
-    g2 = rand(2, 1) + 1i*rand(2, 1);
-    g3 = rand(2, 1) + 1i*rand(2, 1);
-    g4 = rand(2, 1) + 1i*rand(2, 1);
+    g1 = rand(4, 1) + 1i*rand(4, 1); 
+    g2 = rand(4, 1) + 1i*rand(4, 1);
+    g3 = rand(4, 1) + 1i*rand(4, 1);
+    g4 = rand(4, 1) + 1i*rand(4, 1);
     g1 = g1/norm(g1);
     g2 = g2/norm(g2);
     g3 = g3/norm(g3);
     g4 = g4/norm(g4);
     
-    g1b = rand(2, 1) + 1i*rand(2, 1); 
-    g2b = rand(2, 1) + 1i*rand(2, 1);
-    g3b = rand(2, 1) + 1i*rand(2, 1);
-    g4b = rand(2, 1) + 1i*rand(2, 1);
+    g1b = rand(4, 1) + 1i*rand(4, 1); 
+    g2b = rand(4, 1) + 1i*rand(4, 1);
+    g3b = rand(4, 1) + 1i*rand(4, 1);
+    g4b = rand(4, 1) + 1i*rand(4, 1);
     g1b = g1b/norm(g1b);
     g2b = g2b/norm(g2b);
     g3b = g3b/norm(g3b);
     g4b = g4b/norm(g4b);
     
-    g1c = rand(2, 1) + 1i*rand(2, 1); 
-    g2c = rand(2, 1) + 1i*rand(2, 1);
-    g3c = rand(2, 1) + 1i*rand(2, 1);
-    g4c = rand(2, 1) + 1i*rand(2, 1);
+    g1c = rand(4, 1) + 1i*rand(4, 1); 
+    g2c = rand(4, 1) + 1i*rand(4, 1);
+    g3c = rand(4, 1) + 1i*rand(4, 1);
+    g4c = rand(4, 1) + 1i*rand(4, 1);
     g1c = g1c/norm(g1c);
     g2c = g2c/norm(g2c);
     g3c = g3c/norm(g3c);
@@ -110,20 +110,20 @@ for Realization = 1 : N_Realizations
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
             %[v11a, v12a, v13a, v21a, v22a, v23a, v31a, v32a, v33a] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
-            [v11b, v12b, v13b, v14b, v21b, v22b, v23b, v24b, v31b, v32b, v33b, v34b, v41b, v42b, v43b, v44b] = MSE_b_4users_2antennas(Z11, Z12, Z13, Z14, Z21, Z22, Z23, Z24, Z31, Z32, Z33, Z34, Z41, Z42, Z43, Z44, g1b, g2b, g3b, g4b, n0);
-            [v11c, v12c, v13c, v14c, v21c, v22c, v23c, v24c, v31c, v32c, v33c, v34c, v41c, v42c, v43c, v44c] = MSE_b_4users_2antennas(Z11, Z12, Z13, Z14, Z21, Z22, Z23, Z24, Z31, Z32, Z33, Z34, Z41, Z42, Z43, Z44, g1c, g2c, g3c, g4c, n0);
-            v12c = [0;0];
-            v13c = [0;0];
-            v14c = [0;0];
-            v21c = [0;0];
-            v23c = [0;0];
-            v24c = [0;0];
-            v31c = [0;0];
-            v32c = [0;0];
-            v34c = [0;0];
-            v41c = [0;0];
-            v42c = [0;0];
-            v43c = [0;0];
+            [v11b, v12b, v13b, v14b, v21b, v22b, v23b, v24b, v31b, v32b, v33b, v34b, v41b, v42b, v43b, v44b] = MSE_b_4users_4antennas(Z11, Z12, Z13, Z14, Z21, Z22, Z23, Z24, Z31, Z32, Z33, Z34, Z41, Z42, Z43, Z44, g1b, g2b, g3b, g4b, n0);
+            [v11c, v12c, v13c, v14c, v21c, v22c, v23c, v24c, v31c, v32c, v33c, v34c, v41c, v42c, v43c, v44c] = MSE_b_4users_4antennas(Z11, Z12, Z13, Z14, Z21, Z22, Z23, Z24, Z31, Z32, Z33, Z34, Z41, Z42, Z43, Z44, g1c, g2c, g3c, g4c, n0);
+            v12c = [0;0;0;0];
+            v13c = [0;0;0;0];
+            v14c = [0;0;0;0];
+            v21c = [0;0;0;0];
+            v23c = [0;0;0;0];
+            v24c = [0;0;0;0];
+            v31c = [0;0;0;0];
+            v32c = [0;0;0;0];
+            v34c = [0;0;0;0];
+            v41c = [0;0;0;0];
+            v42c = [0;0;0;0];
+            v43c = [0;0;0;0];
             
             v11c = v11c/norm(v11c);
             v22c = v22c/norm(v22c);
@@ -135,7 +135,8 @@ for Realization = 1 : N_Realizations
             %[v31, v32, v33]
             %Power = [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
             %[v11, v12, v13, v21, v22, v23, v31, v32, v33] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
-            [v11, v12, v13, v14, v21, v22, v23, v24, v31, v32, v33, v34, v41, v42, v43, v44] = Primal_Dual_4users_2antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, g1, g2, g3, g4, P, n0);
+            [v11, v12, v13, v14, v21, v22, v23, v24, v31, v32, v33, v34, v41, v42, v43, v44] = Primal_Dual_4users_4antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, g1, g2, g3, g4, P, n0);
+          
             %{
             [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
             [norm(v11b)^2+norm(v12b)^2+norm(v13b)^2 norm(v21b)^2+norm(v22b)^2+norm(v23b)^2 norm(v31b)^2+norm(v32b)^2+norm(v33b)^2]
@@ -163,9 +164,9 @@ for Realization = 1 : N_Realizations
             
             
             %%Forward Training: LS Algorithm
-            [g1, g2, g3, g4]     = MSE_f_4users_2antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, v11, v12, v13, v14, v21, v22, v23, v24, v31, v32, v33, v34, v41, v42, v43, v44, n0);
-            [g1b, g2b, g3b, g4b] = MSE_f_4users_2antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, v11b, v12b, v13b, v14b, v21b, v22b, v23b, v24b, v31b, v32b, v33b, v34b, v41b, v42b, v43b, v44b, n0);
-            [g1c, g2c, g3c, g4c] = MSE_f_4users_2antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, v11c, v12c, v13c, v14c, v21c, v22c, v23c, v24c, v31c, v32c, v33c, v34c, v41c, v42c, v43c, v44c, n0);
+            [g1, g2, g3, g4]     = MSE_f_4users_4antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, v11, v12, v13, v14, v21, v22, v23, v24, v31, v32, v33, v34, v41, v42, v43, v44, n0);
+            [g1b, g2b, g3b, g4b] = MSE_f_4users_4antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, v11b, v12b, v13b, v14b, v21b, v22b, v23b, v24b, v31b, v32b, v33b, v34b, v41b, v42b, v43b, v44b, n0);
+            [g1c, g2c, g3c, g4c] = MSE_f_4users_4antennas(H11, H12, H13, H14, H21, H22, H23, H24, H31, H32, H33, H34, H41, H42, H43, H44, v11c, v12c, v13c, v14c, v21c, v22c, v23c, v24c, v31c, v32c, v33c, v34c, v41c, v42c, v43c, v44c, n0);
             %[g1, g12, g13, g21, g2, g23, g31, g32, g3] = Duality(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, v11, v22, v33, P, n0);
             %[norm(g1)^2 norm(g2)^2 norm(g3)^2 norm(g1b)^2 norm(g2b)^2 norm(g3b)^2 norm(g1c)^2 norm(g2c)^2 norm(g3c)^2]
         
@@ -290,11 +291,11 @@ p1=plot(iternums, mean(C1)+mean(C2)+mean(C3)+mean(C4),'o');
 p2=plot(iternums, mean(C1b)+mean(C2b)+mean(C3b)+mean(C4b),'*');
 p3=plot(iternums, mean(C1c)+mean(C2c)+mean(C3c)+mean(C4c),'s');
 
-axis([1 numiters 5 45])
+axis([1 numiters 20 40])
 
 xlabel('Number of iterations')
 ylabel('C(bits/channel)')
-title('Capacity vs. Iterations: 4 users;2 antennas;P=1;n0=10^{-3};100 realizations')
+title('Capacity vs. Iterations: 4 users;4 antennas;P=1;n0=10^{-2};100 realizations')
 legend([p1,p2,p3],'Cooperative Transmitters(Duality Method)','Cooperative Transmitters(R^{-1}p)','Simple Transmitters')
 
 %{

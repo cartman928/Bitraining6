@@ -2,8 +2,8 @@ function [v11, v12, v21, v22] = MSE_b(Z11, Z12, Z21, Z22, g1, g2, n0)
 %update filters by MSE criterion
 
 %MSE
-R1 = (Z11*g1)*(Z11*g1)'+(Z12*g2)*(Z12*g2)'+n0*eye(2);
-R2 = (Z21*g1)*(Z21*g1)'+(Z22*g2)*(Z22*g2)'+n0*eye(2);
+R1 = (Z11*g1)*(Z11*g1)'+(Z12*g2)*(Z12*g2)'+n0*eye(4);
+R2 = (Z21*g1)*(Z21*g1)'+(Z22*g2)*(Z22*g2)'+n0*eye(4);
 
 P11 = Z11*g1;
 P12 = Z12*g2;
