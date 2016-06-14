@@ -8,8 +8,8 @@ beta = 0.8^2;  %attenuation loss from non-direct antennas
 n0 = 10^(-3);    %noise variance
 P = 1; %power constraint
 
-iternums = 1:50; % number of iterations
-N_Realizations = 2;
+iternums = 1:10; % number of iterations
+N_Realizations = 10;
 
 C1 = zeros(N_Realizations, length(iternums));
 C2 = zeros(N_Realizations, length(iternums));
@@ -89,8 +89,8 @@ for Realization = 1 : N_Realizations
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
             %[v11a, v12a, v13a, v21a, v22a, v23a, v31a, v32a, v33a] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
-            [v11b, v12b, v13b, v21b, v22b, v23b, v31b, v32b, v33b] = MSE_b(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, g1b, g2b, g3b, n0);
-            [v11c, v12c, v13c, v21c, v22c, v23c, v31c, v32c, v33c] = MSE_b(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, g1c, g2c, g3c, n0);
+            [v11b, v12b, v13b, v21b, v22b, v23b, v31b, v32b, v33b] = MSE_b_3users_2antennas(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, g1b, g2b, g3b, n0);
+            [v11c, v12c, v13c, v21c, v22c, v23c, v31c, v32c, v33c] = MSE_b_3users_2antennas(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, g1c, g2c, g3c, n0);
             v12c = [0;0];
             v13c = [0;0];
             v21c = [0;0];
@@ -107,7 +107,7 @@ for Realization = 1 : N_Realizations
             %[v31, v32, v33]
             %Power = [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
             %[v11, v12, v13, v21, v22, v23, v31, v32, v33] = Duality(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
-            [v11, v12, v13, v21, v22, v23, v31, v32, v33] = Primal_Dual(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
+            [v11, v12, v13, v21, v22, v23, v31, v32, v33] = Primal_Dual_3users_2antennas(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, P, n0);
             %{
             [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
             [norm(v11b)^2+norm(v12b)^2+norm(v13b)^2 norm(v21b)^2+norm(v22b)^2+norm(v23b)^2 norm(v31b)^2+norm(v32b)^2+norm(v33b)^2]
@@ -135,9 +135,9 @@ for Realization = 1 : N_Realizations
             
             
             %%Forward Training: LS Algorithm
-            [g1, g2, g3] = MSE_f(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
-            [g1b, g2b, g3b] = MSE_f(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11b, v12b, v13b, v21b, v22b, v23b, v31b, v32b, v33b, n0);
-            [g1c, g2c, g3c] = MSE_f(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11c, v12c, v13c, v21c, v22c, v23c, v31c, v32c, v33c, n0);
+            [g1, g2, g3] = MSE_f_3users_2antennas(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
+            [g1b, g2b, g3b] = MSE_f_3users_2antennas(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11b, v12b, v13b, v21b, v22b, v23b, v31b, v32b, v33b, n0);
+            [g1c, g2c, g3c] = MSE_f_3users_2antennas(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11c, v12c, v13c, v21c, v22c, v23c, v31c, v32c, v33c, n0);
             %[g1, g12, g13, g21, g2, g23, g31, g32, g3] = Duality(Z11, Z12, Z13, Z21, Z22, Z23, Z31, Z32, Z33, v11, v22, v33, P, n0);
             %[norm(g1)^2 norm(g2)^2 norm(g3)^2 norm(g1b)^2 norm(g2b)^2 norm(g3b)^2 norm(g1c)^2 norm(g2c)^2 norm(g3c)^2]
         
