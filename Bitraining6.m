@@ -158,7 +158,7 @@ for Realization = 1 : N_Realizations
             %}
             SINR1 = norm(g1'*(H11*v11+H12*v21+H13*v31))^2/((norm(g1'*(H11*v12+H12*v22+H13*v32)))^2+(norm(g1'*(H11*v13+H12*v23+H13*v33)))^2+n0*g1'*g1);
             SINR2 = norm(g2'*(H21*v12+H22*v22+H23*v32))^2/((norm(g2'*(H21*v11+H22*v21+H23*v31)))^2+(norm(g2'*(H21*v13+H22*v23+H23*v33)))^2+n0*g2'*g2);
-            SINR3 = norm(g3'*(H31*v13+H32*v23+H33*v33))^2/((norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+(norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+n0*g3'*g3);
+            SINR3 = norm(g3'*(H31*v13+H32*v23+H33*v33))^2/((norm(g3'*(H31*v11+H32*v21+H33*v31)))^2+(norm(g3'*(H31*v12+H32*v22+H33*v32)))^2+n0*g3'*g3);
             C1(Realization, numiters) = abs(log2(1+SINR1));
             C2(Realization, numiters) = abs(log2(1+SINR2));
             C3(Realization, numiters) = abs(log2(1+SINR3));
@@ -166,14 +166,14 @@ for Realization = 1 : N_Realizations
             
             SINR1b = norm(g1b'*(H11*v11b+H12*v21b+H13*v31b))^2/((norm(g1b'*(H11*v12b+H12*v22b+H13*v32b)))^2+(norm(g1b'*(H11*v13b+H12*v23b+H13*v33b)))^2+n0*g1b'*g1b);
             SINR2b = norm(g2b'*(H21*v12b+H22*v22b+H23*v32b))^2/((norm(g2b'*(H21*v11b+H22*v21b+H23*v31b)))^2+(norm(g2b'*(H21*v13b+H22*v23b+H23*v33b)))^2+n0*g2b'*g2b);
-            SINR3b = norm(g3b'*(H31*v13b+H32*v23b+H33*v33b))^2/((norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+(norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+n0*g3b'*g3b);
+            SINR3b = norm(g3b'*(H31*v13b+H32*v23b+H33*v33b))^2/((norm(g3b'*(H31*v11b+H32*v21b+H33*v31b)))^2+(norm(g3b'*(H31*v12b+H32*v22b+H33*v32b)))^2+n0*g3b'*g3b);
             C1b(Realization, numiters) = abs(log2(1+SINR1b));
             C2b(Realization, numiters) = abs(log2(1+SINR2b));
             C3b(Realization, numiters) = abs(log2(1+SINR3b));
             
             SINR1c = norm(g1c'*(H11*v11c+H12*v21c+H13*v31c))^2/((norm(g1c'*(H11*v12c+H12*v22c+H13*v32c)))^2+(norm(g1c'*(H11*v13c+H12*v23c+H13*v33c)))^2+n0*g1c'*g1c);
             SINR2c = norm(g2c'*(H21*v12c+H22*v22c+H23*v32c))^2/((norm(g2c'*(H21*v11c+H22*v21c+H23*v31c)))^2+(norm(g2c'*(H21*v13c+H22*v23c+H23*v33c)))^2+n0*g2c'*g2c);
-            SINR3c = norm(g3c'*(H31*v13c+H32*v23c+H33*v33c))^2/((norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+(norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+n0*g3c'*g3c);
+            SINR3c = norm(g3c'*(H31*v13c+H32*v23c+H33*v33c))^2/((norm(g3c'*(H31*v11c+H32*v21c+H33*v31c)))^2+(norm(g3c'*(H31*v12c+H32*v22c+H33*v32c)))^2+n0*g3c'*g3c);
             C1c(Realization, numiters) = abs(log2(1+SINR1c));
             C2c(Realization, numiters) = abs(log2(1+SINR2c));
             C3c(Realization, numiters) = abs(log2(1+SINR3c));
